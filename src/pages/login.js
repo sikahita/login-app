@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-bootstrap";
+import { useNavigate } from "react-router-dom"
 
 function handleChange(){
     
@@ -7,12 +8,19 @@ function handleChange(){
 
 function Login() {
     const [loginSignUp, setLoginSignUp] = useState('login');
+    const navigate = useNavigate();
 
     const onChange = () =>{
         loginSignUp === 'signup'
         ? setLoginSignUp('login')
         : setLoginSignUp('signup');
     }
+
+    const handleReset = () => {
+        console.log("clicked")
+        navigate('/resetPass');
+    };
+
     return (
         <>
         <div className="container" style={{ marginTop: "100px"}}>
@@ -51,13 +59,12 @@ function Login() {
                                                 <input 
                                                     type="checkbox" 
                                                     className="custom-control-input"
-                                                    onChange={handleChange}
-                                                    id="cod"/>
+                                                    onChange={handleChange}/>
                                                     <span className="checkmark"></span>
                                                 </label>
                                             </div>
                                             <div className="w-50 text-md-right">
-                                                <a href="">Forgot Password</a>
+                                                <label className="checkbox-wrap checkbox-primary" onClick={handleReset}>Forgot Password</label>
                                             </div>
                                         </div>
                                         </>
@@ -68,7 +75,7 @@ function Login() {
                                         <div className="form-group">
                                             {loginSignUp === 'signup' ? (
                                                 <>
-                                                <span style={{display:"inline-block"}}>Already have an Account?</span>
+                                                <span style={{display:"inline-block"}}>Already have an account?</span>
                                                 <NavLink style={{display:"inline-block"}} className="text-md-right" onClick={onChange}>
                                                     <u>Login</u>
                                                 </NavLink>
