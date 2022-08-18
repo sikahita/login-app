@@ -2,14 +2,12 @@ import React, { useState } from "react";
 import { NavLink } from "react-bootstrap";
 import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import * as yup from 'yup';
 import { useAuth } from "../contexts/Auth";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import supabase from "../supabaseClient";
 import { useNavigate } from "react-router-dom"
+import Swal from 'sweetalert2'
 
 function handleChange(){
     
@@ -19,7 +17,7 @@ export default function Login() {
     const [formData, setFormData] = useState();
     const [loginSignUp, setLoginSignUp] = useState('login');
     const [spinnerStatus, setSpinnerStatus] = useState(false)
-	const { user, signUp, signIn } = useAuth();
+	const { signUp, signIn } = useAuth();
 	const [authError, setAuthError] = useState(null);
     const navigate = useNavigate();
 
@@ -46,13 +44,12 @@ export default function Login() {
         ? setLoginSignUp('login')
         : setLoginSignUp('signup');
     }
-
     const onSubmit = async data => {
-        setSpinnerStatus(true)
         console.log(data)
 
         // console.log(loginSignUp)
         if (loginSignUp === 'login') {
+            setSpinnerStatus(true)
 			const { error } = await signIn({
 				email: data.email,
 				password: data.password,
@@ -60,7 +57,9 @@ export default function Login() {
 			if (error) {
 				setAuthError(error.message);
                 setSpinnerStatus(false) 
+                Swal.hideLoading();
 			}else{
+                Swal.hideLoading();
                 navigate('/dashboard');
             }
             // const { user, session, error } = await supabase.auth.signIn({
@@ -74,6 +73,19 @@ export default function Login() {
 		}
 
         if (loginSignUp === 'signup') {
+            Swal.fire({
+                title: 'Creating New User..',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                customClass: {
+                    popup: 'border-radius-0',
+                },
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading()
+                }
+            })
             console.log(data)
             // const { user, session, error } = await supabase.auth.signUp({
             //     email: data.email,
@@ -88,11 +100,19 @@ export default function Login() {
             // : navigate('/dashboard');
             if (error) {
 				setAuthError(error.message);
-                setSpinnerStatus(false) 
+                Swal.hideLoading();
 			}else{
-                toast.success("Register Successfully!");
                 setLoginSignUp('login')
-                setSpinnerStatus(false) 
+                Swal.hideLoading();
+                Swal.hideLoading()
+                Swal.fire({
+                title: 'Successfully!',
+                html: "New User Created",
+                type: 'success',
+                confirmButtonText: 'Back to Login',
+                }).then((result) => {
+                    navigate('/')
+                })
             }
 		}
 		
@@ -237,17 +257,6 @@ export default function Login() {
                     </div>
 		</div>
         </div>
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          />
         </>
     )
 
