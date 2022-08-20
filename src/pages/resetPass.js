@@ -39,7 +39,7 @@ function Reset() {
             });
           } else if (datas) {
             console.log(datas);
-            toast.update(notification, { render: "Sent, Please Check Your Email!", type: "success", isLoading: false });
+            toast.update(notification, { render: "Email Sent! Please check your email.", type: "success", isLoading: false });
             // toast.success("Sent, Please Check Your Email!", {
             //   id: notification,
             // });
@@ -81,7 +81,7 @@ function Reset() {
                                         </div>
                                         <br/>
                                         <div className="form-group">
-                                            <button type="submit" className="btn btn-primary rounded submit p-3 px-5">RESET PASSWORD</button>
+                                            <button type="submit" className="btn btn-primary rounded submit p-3 px-5">SEND EMAIL</button>
                                         </div>
                                     </form>
                         </div>

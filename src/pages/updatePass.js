@@ -113,7 +113,7 @@ function PassReset(){
                                 <span className="fa fa-unlock"></span>
                             </div>
                                     <h3 className="text-center mb-4">Reset Password</h3>
-                                    <p className="text-center mb-4">Please Enter Your New Password!</p>
+                                    <p className="text-center mb-4">Please enter your new password!</p>
                                     <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
                                         <div className="form-group">
                                             <i className="fa fa-lock" style={{position:"absolute",paddingLeft: "15px",paddingTop: "17px"}}></i>
