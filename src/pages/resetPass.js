@@ -28,7 +28,7 @@ function Reset() {
           const {error} = await supabase.auth.api.resetPasswordForEmail(
             datas.email,
             {
-              redirectTo: "https://login-app-sikahita.vercel.app/passUpdate", //// this will redirect to us at password-reset page,
+              redirectTo: "login-59yc4fo5y-sikahita.vercel.app/passUpdate", //// this will redirect to us at password-reset page,
               //// you can also set your own page for it.
             }
           );
