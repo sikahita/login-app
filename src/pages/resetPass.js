@@ -28,7 +28,7 @@ function Reset() {
           const {error} = await supabase.auth.api.resetPasswordForEmail(
             datas.email,
             {
-              redirectTo: "http://localhost:3000/passUpdate", //// this will redirect to us at password-reset page,
+              redirectTo: "https://login-app-tawny.vercel.app/passUpdate", //// this will redirect to us at password-reset page,
               //// you can also set your own page for it.
             }
           );
